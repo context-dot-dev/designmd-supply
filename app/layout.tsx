@@ -24,6 +24,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
+      <head>
+        <script
+          async
+          src="https://plausible.io/js/pa-2NMJub8G8j1KD1nTGrH6n.js"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()",
+          }}
+        />
+      </head>
       <body className="min-h-dvh bg-paper font-sans text-ink">
         <div className="isolate flex min-h-dvh flex-col">
           <a
