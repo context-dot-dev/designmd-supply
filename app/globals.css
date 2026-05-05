@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #fbfaf6;
+  --color-ink: #0a0a0a;
+  --color-muted: #6f6b66;
+  --color-rule: rgb(10 10 10 / 0.08);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: rgb(10 10 10 / 0.92);
+  color: var(--color-paper);
+}
+
+.prose-guide h2 {
+  margin-top: 2.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-rule);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.prose-guide h3 {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.prose-guide p {
+  margin-top: 0.75rem;
+  color: var(--color-muted);
+}
+
+.prose-guide ul {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.prose-guide li {
+  color: var(--color-muted);
+}
+
+.prose-guide code,
+.guide-code {
+  font-variant-ligatures: none;
+}
+
+@utility hairline {
+  border-color: var(--color-rule);
+}
+
+/* ------------------------------------------------------------
+   Streaming canvas
+   Tiles render their own skeleton fallback, then the real
+   server-rendered content streams in over the same slot with
+   a soft reveal as each piece of data finishes loading.
+   ------------------------------------------------------------ */
+
+.canvas-tile {
+  position: relative;
+  isolation: isolate;
+}
+
+.canvas-tile[data-state="loading"] {
+  background: linear-gradient(
+    180deg,
+    var(--color-paper) 0%,
+    color-mix(in srgb, var(--color-paper) 60%, white) 100%
+  );
+}
+
+.tile-reveal {
+  animation: tile-reveal 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+@keyframes tile-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Sweeping shimmer used on skeleton tile bodies */
+
+.shimmer-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.shimmer-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgb(255 255 255 / 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmer-sweep 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer-sweep {
+  to { transform: translateX(100%); }
+}
+
+/* Soft caret blink for the streaming "domain typed" effect */
+
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.caret {
+  display: inline-block;
+  width: 0.04em;
+  margin-left: 0.05em;
+  background: currentColor;
+  animation: caret-blink 1s steps(1) infinite;
+  align-self: stretch;
+}
+
+/* ------------------------------------------------------------
+   Immersive loading canvas
+   Full-viewport stage shown while DESIGN.md is generating.
+   Brand-derived cards animate in with stagger, then bobble
+   gently while the route resolves.
+   ------------------------------------------------------------ */
+
+.canvas-stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.canvas-grain {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgb(10 10 10 / 0.05) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+}
+
+.canvas-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 35%,
+    rgb(251 250 246 / 0.55) 75%,
+    rgb(251 250 246 / 0.95) 100%
+  );
+}
+
+.canvas-fade {
+  animation: canvas-fade 1.2s ease-out backwards;
+}
+
+@keyframes canvas-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.canvas-rise {
+  animation: canvas-rise 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+@keyframes canvas-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.canvas-bobble {
+  animation: canvas-bobble 9s ease-in-out infinite;
+  animation-delay: var(--bobble-delay, 0s);
+  will-change: transform;
+}
+
+@keyframes canvas-bobble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.canvas-tilt {
+  transform: rotate(var(--rot, 0deg));
+}
+
+.canvas-card-enter {
+  animation: canvas-card-enter 1s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@keyframes canvas-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(28px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.canvas-progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  transform-origin: left center;
+  animation: canvas-progress 60s cubic-bezier(0.05, 0.7, 0.4, 1) forwards;
+}
+
+@keyframes canvas-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(0.97); }
+}
+
+.canvas-dot {
+  animation: canvas-dot 1.4s ease-in-out infinite;
+}
+.canvas-dot-2 { animation-delay: 0.2s; }
+.canvas-dot-3 { animation-delay: 0.4s; }
+
+@keyframes canvas-dot {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-sweep::after,
+  .caret {
+    animation: none !important;
+  }
+  .tile-reveal,
+  .canvas-fade,
+  .canvas-rise,
+  .canvas-bobble,
+  .canvas-card-enter,
+  .canvas-progress::after,
+  .canvas-dot {
+    animation: none !important;
+  }
+}

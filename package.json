@@ -1,0 +1,49 @@
+{
+  "name": "designmd.supply",
+  "version": "1.0.0",
+  "description": "A minimal supply of generated DESIGN.md style guides for any domain.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "generate:brands": "node scripts/generate-brands.mjs",
+    "generate:styleguides": "node scripts/generate-styleguides.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/context-dot-dev/designmd.supply.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/context-dot-dev/designmd.supply/issues"
+  },
+  "homepage": "https://github.com/context-dot-dev/designmd.supply#readme",
+  "dependencies": {
+    "@libsql/client": "^0.17.3",
+    "ai": "^6.0.175",
+    "context.dev": "^1.12.0",
+    "lucide-react": "^1.14.0",
+    "next": "^16.2.4",
+    "next-plausible": "^4.0.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "overrides": {
+    "postcss": "^8.5.14"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.4",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3"
+  }
+}
