@@ -55,7 +55,7 @@ export default function RootLayout({
             <span>open source</span>
           </a>
           <a
-            href="https://context.dev/?utm_source=designmd.supply&utm_medium=widget&utm_campaign=powered_by"
+            href="https://context.dev/?utm_source=designmd-supply&utm_medium=widget&utm_campaign=powered_by"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Powered by context.dev — opens in a new tab"
