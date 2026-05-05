@@ -25,7 +25,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
       <body className="min-h-dvh bg-paper font-sans text-ink">
-        <Analytics />
         <div className="isolate flex min-h-dvh flex-col">
           <a
             href="https://github.com/context-dot-dev/designmd-supply"
@@ -63,6 +62,7 @@ export default function RootLayout({
             </div>
           </a>
           <div className="grow">{children}</div>
+          <Analytics />
         </div>
       </body>
     </html>
