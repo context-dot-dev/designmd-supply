@@ -42,9 +42,20 @@ Then open <http://localhost:3000> and search for any domain.
 ### Environment variables
 
 ```bash
-CONTEXT_DEV_API_KEY=        # https://context.dev
-VERCEL_AI_GATEWAY_API_KEY=  # https://vercel.com/ai-gateway
+CONTEXT_DEV_API_KEY=             # https://context.dev
+VERCEL_AI_GATEWAY_API_KEY=       # https://vercel.com/ai-gateway
+
+# Turso (Vercel Marketplace integration — auto-injected on Vercel)
+designmd_TURSO_DATABASE_URL=
+designmd_TURSO_AUTH_TOKEN=
 ```
+
+The `designmd_*` prefix matches the variables provisioned by the
+[Turso integration on the Vercel Marketplace](https://vercel.com/marketplace/turso),
+so on Vercel they're injected automatically. Locally, copy them from the
+project's Vercel dashboard into `.env`. If they're absent, the app still
+works — it just falls through to the live Context.dev APIs on every request
+with no cache.
 
 ## How it works
 
@@ -53,6 +64,10 @@ VERCEL_AI_GATEWAY_API_KEY=  # https://vercel.com/ai-gateway
             │             Domain in (any URL)          │
             └──────────────────────────────────────────┘
                                   │
+                                  ▼
+                       Turso cache hit?  ──► serve cached payload
+                                  │
+                                  ▼ (miss)
        ┌──────────────┬───────────┴──────────┬──────────────┐
        ▼              ▼                      ▼              ▼
   Styleguide API   Brand API           Screenshot API   Markdown API
@@ -65,6 +80,8 @@ VERCEL_AI_GATEWAY_API_KEY=  # https://vercel.com/ai-gateway
                    LLM via Vercel AI Gateway
                                  ▼
                     DESIGN.md  (YAML + Markdown)
+                                 ▼
+                       write back to Turso
 ```
 
 The four Context.dev calls run in parallel. The model receives the styleguide
@@ -77,46 +94,43 @@ real data rather than the model's imagination.
 ```
 app/
   api/
-    brand/         GET  — Context.dev Brand API proxy
-    styleguide/    GET  — Context.dev Styleguide API proxy
-    screenshot/    GET  — Context.dev Screenshot API proxy (with cache passthrough)
-    design-md/     GET  — cache lookup
+    brand/         GET  — Context.dev Brand API proxy (Turso-cached)
+    styleguide/    GET  — Context.dev Styleguide API proxy (Turso-cached)
+    screenshot/    GET  — Context.dev Screenshot API proxy (Turso-cached)
+    design-md/     GET  — Turso cache lookup
                    POST — compose DESIGN.md from the three payloads + Markdown
   guides/[domain]/ route for an individual generated guide
-  page.tsx         home with search + directory of pre-generated brands
+  page.tsx         home with search + directory of curated domains
 
 components/        UI: directory, search, canvas, orchestration, copy block
 lib/
   design-md.ts     prompt + spec summary
-  brands.json      curated list of brands shown on the home page
-  styleguides.json build-time cache of generated DESIGN.md files
-scripts/
-  generate-brands.mjs       prefetch brand payloads
-  generate-styleguides.mjs  batch-generate DESIGN.md for every brand in brands.json
+  domains.ts       curated list of domains shown on the home page
+  turso.ts         libSQL client + cache helpers (get/set/batch/listDomains)
 ```
 
-## Pre-generating the directory
+## Caching with Turso
 
-The home page directory is backed by `lib/styleguides.json`, which is built at
-authoring time so the live app can serve those domains instantly without
-hitting the API on every request.
+The four Context.dev payloads (styleguide, brand, screenshot, markdown) and
+the final composed `DESIGN.md` are all cached in a single Turso table,
+`domain_cache`, keyed by `(domain, kind)`. The schema is created lazily on
+first use — there's no migration step.
 
-```bash
-# Brand metadata for the directory cards
-npm run generate:brands
+- **First request** for a domain hits Context.dev + the LLM and writes every
+  payload back to Turso.
+- **Subsequent requests** for the same domain serve straight from Turso.
+- **`generateStaticParams`** for `/guides/[domain]` reads the set of domains
+  with a cached `designmd` row from Turso, so the build only pre-renders
+  pages that actually have content.
+- **Homepage directory** uses a single batched read (`getCachedBatch`) to
+  pull brand + screenshot for every curated domain in one round trip.
 
-# DESIGN.md for every domain in lib/brands.json (3-way concurrent)
-npm run generate:styleguides
+Cache writes are best-effort — if Turso is unreachable, the request still
+succeeds, the user just doesn't get a cached copy. The same applies if the
+env vars are missing entirely (see above).
 
-# Re-generate one domain
-node scripts/generate-styleguides.mjs --only=stripe.com
-
-# Force a full rebuild
-node scripts/generate-styleguides.mjs --force
-```
-
-Live searches for any other domain are generated on demand and cached at the
-edge by Vercel.
+To add a domain to the curated directory, append it to `TOP_DOMAINS` in
+`lib/domains.ts`. The first visit will populate the cache.
 
 ## Scripts
 
@@ -135,11 +149,13 @@ npm run typecheck   # tsc --noEmit
 - [Tailwind CSS 4](https://tailwindcss.com/)
 - [`context.dev`](https://www.npmjs.com/package/context.dev) SDK
 - [Vercel AI SDK](https://sdk.vercel.ai/) + AI Gateway
+- [Turso](https://turso.tech/) (libSQL) via the
+  [Vercel Marketplace integration](https://vercel.com/marketplace/turso)
 
 ## Contributing
 
-Issues and PRs welcome. To add a brand to the curated directory, drop it into
-`lib/brands.json` and run `npm run generate:styleguides --only=yourdomain.com`.
+Issues and PRs welcome. To add a domain to the curated directory, append it
+to `TOP_DOMAINS` in `lib/domains.ts` — the cache populates on first visit.
 
 ## License
 
