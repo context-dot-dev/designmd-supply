@@ -25,11 +25,11 @@
   "homepage": "https://github.com/context-dot-dev/designmd.supply#readme",
   "dependencies": {
     "@libsql/client": "^0.17.3",
+    "@vercel/analytics": "^2.0.1",
     "ai": "^6.0.175",
     "context.dev": "^1.12.0",
     "lucide-react": "^1.14.0",
     "next": "^16.2.4",
-    "next-plausible": "^4.0.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
