@@ -9,7 +9,7 @@ export default async function Home() {
   const cards = await loadDirectoryCards();
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-5 pb-24 pt-12 sm:px-8 sm:pt-20">
+    <main className="mx-auto w-full max-w-6xl px-5 pb-32 pt-20 sm:px-8 sm:pt-20">
       <section className="grid gap-12 sm:gap-16">
         <div>
           <h1 className="max-w-[14ch] text-5xl font-medium tracking-tight text-balance text-ink sm:text-7xl">

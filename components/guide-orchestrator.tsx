@@ -214,16 +214,16 @@ export function GuideOrchestrator({ domain, initialBrand }: Props) {
     designMd?.status === "ready" ? designMd.markdownLength : 0;
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-5 pb-24 pt-10 sm:px-8 sm:pt-12">
+    <main className="mx-auto w-full max-w-7xl px-4 pb-32 pt-16 sm:px-8 sm:pt-12 sm:pb-24">
       <Link
         href="/"
         className="inline-flex items-center gap-2 font-mono text-base/6 text-muted transition hover:text-ink sm:text-xs"
       >
-        <ArrowLeft className="size-3.5" aria-hidden="true" />
+        <ArrowLeft className="size-4 sm:size-3.5" aria-hidden="true" />
         Back to supply
       </Link>
 
-      <header className="mt-8 grid gap-3 border-b border-rule pb-8">
+      <header className="mt-6 grid gap-3 border-b border-rule pb-6 sm:mt-8 sm:pb-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
           {brand?.industry?.industry ?? "DESIGN.md"}
         </p>
@@ -235,15 +235,15 @@ export function GuideOrchestrator({ domain, initialBrand }: Props) {
             href={domainToUrl(domain)}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-muted transition hover:text-ink"
+            className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide text-muted transition hover:text-ink sm:text-[11px]"
           >
             {domain}
-            <ExternalLink className="size-3" aria-hidden="true" />
+            <ExternalLink className="size-3.5 sm:size-3" aria-hidden="true" />
           </a>
         </div>
       </header>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12">
+      <div className="mt-8 grid grid-cols-1 gap-8 sm:mt-10 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12">
         <DesignMdArticle
           domain={domain}
           designMd={designMd?.status === "ready" ? designMd.designMd : undefined}

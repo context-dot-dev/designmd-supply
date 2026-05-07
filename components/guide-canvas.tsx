@@ -19,7 +19,7 @@ export function DesignMdArticle({
   message?: string;
 }) {
   return (
-    <article className="tile-reveal">
+    <article className="tile-reveal min-w-0">
       <header className="flex items-baseline justify-between gap-4 pb-3">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
           DESIGN.md · raw
@@ -71,7 +71,7 @@ export function IngredientsSidebar({
   source: { styleguide: boolean; screenshot: boolean; markdownLength: number };
 }) {
   return (
-    <aside className="grid gap-6 lg:sticky lg:top-8 lg:self-start">
+    <aside className="grid min-w-0 gap-6 lg:sticky lg:top-8 lg:self-start">
       <SidebarHeader />
       <ScreenshotIngredient domain={domain} screenshot={screenshot} />
       <IdentityIngredient brand={brand} domain={domain} />
@@ -439,7 +439,7 @@ function SourceRow({
   mono?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 text-sm/5">
+    <div className="flex items-center justify-between gap-4">
       <dt className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wide text-muted">
         <span
           aria-hidden="true"
@@ -448,7 +448,7 @@ function SourceRow({
         {label}
       </dt>
       <dd
-        className={`text-sm/5 font-medium text-ink ${mono ? "font-mono tabular-nums" : ""}`}
+        className={`text-base/6 font-medium text-ink sm:text-sm/5 ${mono ? "font-mono tabular-nums" : ""}`}
       >
         {value}
       </dd>
@@ -471,8 +471,8 @@ function Notice({
       : "border-red-700/20 bg-red-50 text-red-950";
   return (
     <div className={`rounded-xl border p-4 ${toneClass}`}>
-      <p className="text-sm/5 font-medium">{title}</p>
-      <p className="mt-2 max-w-[72ch] text-sm/6">{body}</p>
+      <p className="text-base/6 font-medium sm:text-sm/5">{title}</p>
+      <p className="mt-2 max-w-[72ch] text-base/7 sm:text-sm/6">{body}</p>
     </div>
   );
 }

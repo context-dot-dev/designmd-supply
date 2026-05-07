@@ -14,6 +14,7 @@
 html {
   background: var(--color-paper);
   color: var(--color-ink);
+  overflow-x: clip;
 }
 
 body {
@@ -21,6 +22,7 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-feature-settings: "ss01", "cv11";
+  overflow-x: clip;
 }
 
 ::selection {

@@ -52,14 +52,14 @@ export function LoadingCanvas({
   const positions: Record<string, FloaterPosition> = {
     logo: {
       className:
-        "absolute left-[3vw] top-[12vh] w-52 sm:left-[6vw] sm:top-[14vh] sm:w-60",
+        "max-sm:hidden absolute left-[3vw] top-[12vh] w-52 sm:left-[6vw] sm:top-[14vh] sm:w-60",
       rot: -4,
       enterDelay: 350,
       bobbleDelay: 0,
     },
     palette: {
       className:
-        "absolute right-[3vw] top-[10vh] w-56 sm:right-[6vw] sm:top-[12vh] sm:w-64",
+        "max-sm:hidden absolute right-[3vw] top-[10vh] w-56 sm:right-[6vw] sm:top-[12vh] sm:w-64",
       rot: 3,
       enterDelay: 500,
       bobbleDelay: 1.4,
@@ -73,7 +73,7 @@ export function LoadingCanvas({
     },
     components: {
       className:
-        "absolute left-[3vw] bottom-[14vh] w-72 sm:left-[8vw] sm:bottom-[16vh] sm:w-80",
+        "max-sm:hidden absolute left-[3vw] bottom-[14vh] w-72 sm:left-[8vw] sm:bottom-[16vh] sm:w-80",
       rot: 2,
       enterDelay: 800,
       bobbleDelay: 0.6,
