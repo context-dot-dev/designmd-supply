@@ -10,11 +10,12 @@ import type {
   LiveScreenshot,
   LiveStyleguide,
 } from "@/lib/api-types";
-import { LoadingCanvas, type CanvasProgress } from "@/components/loading-canvas";
 import {
-  DesignMdArticle,
-  IngredientsSidebar,
-} from "@/components/guide-canvas";
+  LoadingCanvas,
+  type CanvasProgress,
+} from "@/components/loading-canvas";
+import { DesignMdArticle, IngredientsSidebar } from "@/components/guide-canvas";
+import { RawDataCta } from "@/components/raw-data-cta";
 
 type Status = "loading" | "ready" | "none" | "error";
 type DesignStatus = "idle" | "loading" | "ready" | "error";
@@ -246,7 +247,9 @@ export function GuideOrchestrator({ domain, initialBrand }: Props) {
       <div className="mt-8 grid grid-cols-1 gap-8 sm:mt-10 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12">
         <DesignMdArticle
           domain={domain}
-          designMd={designMd?.status === "ready" ? designMd.designMd : undefined}
+          designMd={
+            designMd?.status === "ready" ? designMd.designMd : undefined
+          }
           status={designStatusForArticle}
           message={message}
         />

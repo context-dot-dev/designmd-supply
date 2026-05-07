@@ -2,6 +2,7 @@ import { Camera, FileText, ImageIcon, Layers, Palette } from "lucide-react";
 import type { LiveBrand, LiveScreenshot } from "@/lib/api-types";
 import { pickLogoForSurface, shouldInvert } from "@/lib/logo-pick";
 import { MarkdownCopyBlock } from "@/components/markdown-copy-block";
+import { RawDataCta } from "./raw-data-cta";
 
 /* ------------------------------------------------------------ */
 /* Left column — raw DESIGN.md with copy button                 */
@@ -34,7 +35,13 @@ export function DesignMdArticle({
       </header>
 
       {status === "ready" && designMd ? (
-        <MarkdownCopyBlock filename={`${domain}/DESIGN.md`} content={designMd} />
+        <>
+          <MarkdownCopyBlock
+            filename={`${domain}/DESIGN.md`}
+            content={designMd}
+          />
+          <RawDataCta domain={domain} />
+        </>
       ) : status === "missing-env" ? (
         <Notice
           tone="warn"
