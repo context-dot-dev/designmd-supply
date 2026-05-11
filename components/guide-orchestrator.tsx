@@ -15,7 +15,6 @@ import {
   type CanvasProgress,
 } from "@/components/loading-canvas";
 import { DesignMdArticle, IngredientsSidebar } from "@/components/guide-canvas";
-import { RawDataCta } from "@/components/raw-data-cta";
 
 type Status = "loading" | "ready" | "none" | "error";
 type DesignStatus = "idle" | "loading" | "ready" | "error";
@@ -252,6 +251,8 @@ export function GuideOrchestrator({ domain, initialBrand }: Props) {
           }
           status={designStatusForArticle}
           message={message}
+          brand={brand}
+          styleguide={styleguide}
         />
         <IngredientsSidebar
           brand={brand}

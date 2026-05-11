@@ -1,7 +1,11 @@
 import { Camera, FileText, ImageIcon, Layers, Palette } from "lucide-react";
-import type { LiveBrand, LiveScreenshot } from "@/lib/api-types";
+import type {
+  LiveBrand,
+  LiveScreenshot,
+  LiveStyleguide,
+} from "@/lib/api-types";
 import { pickLogoForSurface, shouldInvert } from "@/lib/logo-pick";
-import { MarkdownCopyBlock } from "@/components/markdown-copy-block";
+import { GuideTabs } from "@/components/guide-tabs";
 import { RawDataCta } from "./raw-data-cta";
 
 /* ------------------------------------------------------------ */
@@ -13,17 +17,21 @@ export function DesignMdArticle({
   designMd,
   status,
   message,
+  brand,
+  styleguide,
 }: {
   domain: string;
   designMd?: string;
   status: "ready" | "missing-env" | "error";
   message?: string;
+  brand?: LiveBrand;
+  styleguide?: LiveStyleguide | null;
 }) {
   return (
     <article className="tile-reveal min-w-0">
       <header className="flex items-baseline justify-between gap-4 pb-3">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-          DESIGN.md · raw
+          Design tokens · copy & paste
         </p>
         <p className="hidden font-mono text-[10px] uppercase tracking-wide text-muted/70 sm:block">
           {status === "ready"
@@ -36,9 +44,11 @@ export function DesignMdArticle({
 
       {status === "ready" && designMd ? (
         <>
-          <MarkdownCopyBlock
-            filename={`${domain}/DESIGN.md`}
-            content={designMd}
+          <GuideTabs
+            domain={domain}
+            designMd={designMd}
+            brand={brand}
+            styleguide={styleguide}
           />
           <RawDataCta domain={domain} />
         </>

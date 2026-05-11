@@ -45,12 +45,60 @@ export type LiveStyleguideButton = {
   backgroundColor?: string;
   borderColor?: string;
   borderRadius?: string;
+  borderStyle?: string;
+  borderWidth?: string;
+  boxShadow?: string;
   color?: string;
+  css?: string;
+  fontFallbacks?: string[];
   fontFamily?: string;
   fontSize?: string;
   fontWeight?: number;
   padding?: string;
+};
+
+export type LiveStyleguideCard = {
+  backgroundColor?: string;
+  borderColor?: string;
+  borderRadius?: string;
+  borderStyle?: string;
+  borderWidth?: string;
+  boxShadow?: string;
   css?: string;
+  padding?: string;
+  textColor?: string;
+};
+
+export type LiveStyleguideText = {
+  fontFallbacks?: string[];
+  fontFamily?: string;
+  fontSize?: string;
+  fontWeight?: number;
+  letterSpacing?: string;
+  lineHeight?: string;
+};
+
+export type LiveStyleguideShadows = {
+  inner?: string;
+  sm?: string;
+  md?: string;
+  lg?: string;
+  xl?: string;
+};
+
+export type LiveStyleguideSpacing = {
+  xs?: string;
+  sm?: string;
+  md?: string;
+  lg?: string;
+  xl?: string;
+};
+
+export type LiveStyleguideFontLink = {
+  type?: "google" | "custom";
+  category?: string;
+  displayName?: string;
+  files?: Record<string, string>;
 };
 
 export type LiveStyleguide = {
@@ -65,13 +113,20 @@ export type LiveStyleguide = {
       secondary?: LiveStyleguideButton;
       link?: LiveStyleguideButton;
     };
+    card?: LiveStyleguideCard;
   };
   typography?: {
     headings?: {
-      h1?: { fontFamily?: string; fontSize?: string; fontWeight?: number };
+      h1?: LiveStyleguideText;
+      h2?: LiveStyleguideText;
+      h3?: LiveStyleguideText;
+      h4?: LiveStyleguideText;
     };
-    p?: { fontFamily?: string; fontSize?: string; fontWeight?: number };
+    p?: LiveStyleguideText;
   };
+  elementSpacing?: LiveStyleguideSpacing;
+  shadows?: LiveStyleguideShadows;
+  fontLinks?: Record<string, LiveStyleguideFontLink>;
   // raw payload for the LLM
   raw?: unknown;
 };

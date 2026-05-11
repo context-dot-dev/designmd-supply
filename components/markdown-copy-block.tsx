@@ -73,7 +73,7 @@ export function MarkdownCopyBlock({ filename, content }: Props) {
         </button>
       </div>
       <pre className="guide-code overflow-auto px-4 py-4 font-mono text-[0.8125rem]/6 text-paper/95 sm:max-h-[36rem] sm:px-5">
-        <code className="whitespace-pre">{content}</code>
+        <code className="whitespace-pre-wrap break-words">{content}</code>
       </pre>
     </div>
   );

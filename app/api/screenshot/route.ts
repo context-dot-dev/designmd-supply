@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
     const result = await client.web.screenshot({
       domain,
       fullScreenshot: "false",
-      prioritize: "quality",
+      handleCookiePopup: "true",
     });
 
     const body: LiveScreenshot = result.screenshot
