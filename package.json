@@ -29,12 +29,12 @@
     "ai": "^6.0.175",
     "context.dev": "^1.20.0",
     "lucide-react": "^1.14.0",
-    "next": "^16.2.4",
+    "next": "^16.3.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
   "overrides": {
-    "postcss": "^8.5.14"
+    "postcss": "^8.5.26"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.4",
