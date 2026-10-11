@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -25,15 +26,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
       <head>
-        <script
-          async
-          src="https://plausible.io/js/pa-2NMJub8G8j1KD1nTGrH6n.js"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()",
-          }}
+        <Script
+          src="https://cdn.databuddy.cc/databuddy.js"
+          data-client-id="4ddcf594-6446-412b-829d-474f35c57599"
+          data-track-outgoing-links="true"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
       </head>
       <body className="min-h-dvh bg-paper font-sans text-ink">
