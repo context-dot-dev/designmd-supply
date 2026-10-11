@@ -43,8 +43,10 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  // A miss is only true until the POST below generates the guide, so it must
+  // not be cached, or the CDN keeps answering "miss" long after Turso has it.
   return NextResponse.json({ status: "miss" } satisfies DesignMdResponse, {
-    headers: CACHE_HEADERS,
+    headers: { "Cache-Control": "no-store" },
   });
 }
 
