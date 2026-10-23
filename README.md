@@ -29,6 +29,22 @@ to produce the final `DESIGN.md`.
 Get a free Context.dev key at
 [context.dev](https://context.dev?utm_source=designmd-supply&utm_medium=github&utm_campaign=open-source).
 
+## Use cases
+
+### Give a coding agent a website's design context
+
+Search for a public domain, open its generated guide, and copy the `DESIGN.md` into your project. Ask the agent to apply its colors, typography, and component guidance to your existing UI. Review the observed tokens against the source screenshot before adopting them; the composed guidance is model-generated.
+
+### Prepare customer-branded products and reports
+
+Generate a guide for the customer's domain, then map its logo, palette, and typography into your own dashboard, report, or slide template. Keep customer-approved overrides separate from extracted suggestions. Check contrast, font availability, and logo treatment in the actual output renderer.
+
+For application code that only needs branding data, call [Context.dev Brand and Styleguide](https://docs.context.dev/use-cases/branded-documents) directly. Generating a full `DESIGN.md` is optional.
+
+### Compare a proposed interface with its source brand
+
+Use the guide's tokens and screenshot as a reference while reviewing your implementation. Check the resulting screen at desktop and mobile widths. A generated guide is a starting point for design work, not a claim that the source site has been reproduced exactly or that its assets are licensed for reuse.
+
 ## Quickstart
 
 ```bash
