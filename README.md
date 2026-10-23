@@ -29,6 +29,23 @@ to produce the final `DESIGN.md`.
 Get a free Context.dev key at
 [context.dev](https://context.dev?utm_source=designmd-supply&utm_medium=github&utm_campaign=open-source).
 
+## Chrome extension
+
+The optional extension opens the current website's guide on designmd.supply.
+It uses the existing Context.dev-powered pipeline; it does not inspect the
+page's DOM or require an API key in the browser.
+
+1. Open `chrome://extensions` and enable Developer mode.
+2. Choose **Load unpacked** and select this repository's `extension` folder.
+3. On a public website, click **Context.dev Styleguide**, confirm the domain,
+   and choose **Open styleguide**.
+
+Only the hostname is sent when you open the guide; paths, queries, page contents,
+and cookies are not copied. The extension requests `activeTab` only and does not
+run in the background. Local addresses and IP addresses are unsupported. The
+guide describes the public website, so it cannot inspect a private signed-in
+page. This is an unpacked preview; a Chrome Web Store listing is not yet published.
+
 ## Quickstart
 
 ```bash

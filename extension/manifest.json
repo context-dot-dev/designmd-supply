@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Context.dev Styleguide",
+  "version": "0.1.0",
+  "description": "Open a website's colors, typography, and DESIGN.md on designmd.supply, powered by Context.dev.",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_title": "Open this website's styleguide",
+    "default_popup": "popup.html"
+  }
+}
